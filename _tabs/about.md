@@ -4,8 +4,6 @@ icon: fas fa-info-circle
 order: 4
 ---
 
-![Hero image](/assets/headers/about-banner.webp)
-
 # 👋 Hi!
 
 I'm Anxo Januario, a penetration tester and offensive security enthusiast based in Spain.

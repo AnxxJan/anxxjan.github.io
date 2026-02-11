@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Difficulties on Anxo Januario</title>
+    <link>http://localhost:1313/difficulties/</link>
+    <description>Recent content in Difficulties on Anxo Januario</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>© 2026 </copyright>
+    <lastBuildDate>Mon, 09 Feb 2026 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/difficulties/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Easy</title>
+      <link>http://localhost:1313/difficulties/easy/</link>
+      <pubDate>Mon, 09 Feb 2026 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/difficulties/easy/</guid>
+      <description></description>
+      
+    </item>
+    
+  </channel>
+</rss>

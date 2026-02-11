@@ -1,0 +1,44 @@
+####################
+####    Me    ######
+####################
+[[main]]
+name = "Me"
+pageRef = "Me"
+weight = 20
+
+[[main]]
+name = "Certifications"
+parent = "Me"
+pageRef = "Me/Certifications"
+weight = 20
+
+[[main]]
+name = "Profesional Experience"
+parent = "Me"
+pageRef = "Me/Experience"
+weight = 20
+
+####################
+#### Write Up ######
+####################
+[[main]]
+name = "WriteUp"
+weight = 30
+
+#### HACKTHEBOX ####
+[[main]]
+name = "HackTheBox"
+parent = "WriteUp"
+pageRef = "WriteUp/HackTheBox"
+weight = 30
+
+#### VULNLAB ####
+[[main]]
+name = "VulnLab"
+parent = "WriteUp"
+pageRef = "WriteUp/VulnLab"
+weight = 30
+
+#### FOOTER ####
+[[footer]]
+none = "none"

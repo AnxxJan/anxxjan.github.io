@@ -10,7 +10,7 @@ description: A Windows-based challenge where an exposed Gitea access token leads
 
 ![alt text](featured.png)
 
-# Nmap
+## Nmap
 First, as always, the challenge was started by running Nmap to enumerate the server's ports and services.
 
 ```
@@ -89,7 +89,7 @@ Host script results:
 |_  start_date: N/A 
 ```
 
-# Foothold
+## Foothold
 
 An instance of Gitea was identified on port 3000. Within this instance, a repository named `dev-scripts`, owned by the user `ellen.freeman`, was discovered.
 
@@ -197,7 +197,7 @@ whoami
 
 ![](Pasted%20image%2020260212194104.png)
 
-# Privilege Escalation
+## Privilege Escalation
 
 ### Ellen.freeman to Gale.Dekarios
 

@@ -9,7 +9,7 @@ description: This challenge involves compromising a Windows host exposed via RDP
 ---
 ![alt text](featured.png)
 
-# Nmap
+## Nmap
 The challenge was started by running Nmap to enumerate the server's ports and services.
 ```bash
 sudo nmap -p- -sCV 10.10.124.49 -oA nmap/fulltcp-Escape
@@ -41,7 +41,7 @@ Nmap done: 1 IP address (1 host up) scanned in 1755.60 seconds
 ```
 The scan confirmed that the target was a Windows host with the RDP port open.
 
-# Foothold
+## Foothold
 Since no user information was available, an attempt was made to access the service by disabling Network Level Authentication (NLA) via the /sec:nla:off parameter.
 
 > [!NOTE]
@@ -61,7 +61,7 @@ xfreerdp3 /v:10.10.124.49 /u:"KioskUser0" /p:"" /cert:ignore /sec:nla:off +clipb
 
 ![](Pasted%20image%2020260210161906.png)
 
-# Escape kiosk mode
+## Escape kiosk mode
 Using the KioskUser0 account, access to a Windows desktop operating in Kiosk mode was obtained. The next objective was to attempt a breakout from the restricted environment in order to gain full interactive user access.
 
 ![](Pasted%20image%2020260210163238.png)
@@ -145,7 +145,7 @@ runas /user:admin powershell.exe
 
 ![](Pasted%20image%2020260210175437.png)
 
-# Privilege escalation
+## Privilege escalation
 
 To escalate privileges, the following command was simply executed, which starts a new instance of PowerShell requesting elevation via UAC (-Verb runas), thereby displaying a prompt to run the process as an administrator if the user has the appropriate permissions.
 

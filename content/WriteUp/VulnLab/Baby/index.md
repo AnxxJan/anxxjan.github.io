@@ -10,7 +10,7 @@ description: "This challenge involved enumerating a Windows domain environment, 
 
 ![alt text](featured.png)
 
-# Nmap
+## Nmap
 First, as always, the challenge was started by running Nmap to enumerate the server's ports and services.
 ```
 $ sudo nmap -p- -sCV 10.10.102.159 -oA nmap/init-tcp
@@ -78,7 +78,7 @@ The scan confirmed that the target was a Windows domain controller named BabyDC.
 
 <br>
 
-# Foothold
+## Foothold
 
 It was then identified that LDAP enumeration using a null session was possible, and a password was discovered in the description field of the user "Teresa Bell".
 ```
@@ -132,7 +132,7 @@ evil-winrm -i 10.10.102.159 -u Caroline.Robinson -p <password>
 ![alt text](image-7.png)
 <br>
 
-# Privilege escalation (failed attempt)
+## Privilege escalation (failed attempt)
 First, the current user's privileges were enumerated, revealing a clear privilege escalation path.
 ![alt text](image-8.png)
 
@@ -165,7 +165,7 @@ It was not possible to authenticate using this hash, as it corresponds to the lo
 
 <br>
 
-# Privilege Escalation (successful attempt)
+## Privilege Escalation (successful attempt)
 First, as stated in the aforementioned blog post, a DiskShadow script was written to create a live copy of the C: drive and expose it as a network drive using the letter E:.
 ![alt text](image-12.png)
 

@@ -12,12 +12,6 @@ parent = "Me"
 pageRef = "Me/Certifications"
 weight = 20
 
-[[main]]
-name = "Profesional Experience"
-parent = "Me"
-pageRef = "Me/Experience"
-weight = 20
-
 ####################
 #### Write Up ######
 ####################

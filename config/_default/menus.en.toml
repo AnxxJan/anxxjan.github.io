@@ -3,7 +3,7 @@
 ####################
 [[main]]
 name = "Me"
-pageRef = "Me"
+#pageRef = "Me"
 weight = 20
 
 [[main]]

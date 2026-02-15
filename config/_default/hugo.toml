@@ -27,7 +27,8 @@ googleAnalytics = "G-BMF9C63WB2"
 [taxonomies]
   tag = "tags"
   category = "categories"
-  difficulty = "difficulties" # Para el nivel: "Easy", "Medium", "Hard", "Insane"
+  source = "sources" # "HTB", "VulnLab"
+  difficulty = "difficulties" # "Easy", "Medium", "Hard", "Insane"
   author = "authors"
   series = "series"
 

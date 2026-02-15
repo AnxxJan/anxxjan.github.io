@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Machines on Anxo Januario</title>
+    <link>http://localhost:1313/writeup/machines/</link>
+    <description>Recent content in Machines on Anxo Januario</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>© 2026 </copyright>
+    <lastBuildDate>Fri, 13 Feb 2026 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/writeup/machines/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Retro</title>
+      <link>http://localhost:1313/writeup/machines/vulnlab/retro/</link>
+      <pubDate>Fri, 13 Feb 2026 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/writeup/machines/vulnlab/retro/</guid>
+      <description></description>
+      <media:content xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:1313/writeup/machines/vulnlab/retro/featured.png" />
+    </item>
+    
+    <item>
+      <title>Lock</title>
+      <link>http://localhost:1313/writeup/machines/vulnlab/lock/</link>
+      <pubDate>Thu, 12 Feb 2026 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/writeup/machines/vulnlab/lock/</guid>
+      <description></description>
+      <media:content xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:1313/writeup/machines/vulnlab/lock/featured.png" />
+    </item>
+    
+    <item>
+      <title>Escape</title>
+      <link>http://localhost:1313/writeup/machines/vulnlab/escape/</link>
+      <pubDate>Tue, 10 Feb 2026 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/writeup/machines/vulnlab/escape/</guid>
+      <description></description>
+      <media:content xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:1313/writeup/machines/vulnlab/escape/featured.png" />
+    </item>
+    
+    <item>
+      <title>Baby</title>
+      <link>http://localhost:1313/writeup/machines/vulnlab/baby/</link>
+      <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/writeup/machines/vulnlab/baby/</guid>
+      <description></description>
+      <media:content xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:1313/writeup/machines/vulnlab/baby/featured.png" />
+    </item>
+    
+  </channel>
+</rss>

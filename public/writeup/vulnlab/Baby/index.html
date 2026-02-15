@@ -327,9 +327,9 @@
           
           aria-label="Me"
           class="flex items-center text-base font-medium bf-icon-color-hover"
-          title="Mes">
+          title="Me">
           
-          <span class="text-bg font-bg break-normal" title="Mes">
+          <span class="text-bg font-bg break-normal" title="Me">
             Me
           </span>
           <span>
@@ -361,17 +361,6 @@
                 
                 <span class="text-sm font-sm" title="Certifications">
                   Certifications
-                </span>
-              </a>
-            
-              <a
-                href="/me/experience/"
-                
-                aria-label="Profesional Experience"
-                class="flex items-center bf-icon-color-hover">
-                
-                <span class="text-sm font-sm" title="Profesional Experience">
-                  Profesional Experience
                 </span>
               </a>
             
@@ -419,12 +408,12 @@
           <div class="flex flex-col space-y-3">
             
               <a
-                href="/writeup/hackthebox/"
+                href=""
                 
                 aria-label="HackTheBox"
                 class="flex items-center bf-icon-color-hover">
                 
-                <span class="text-sm font-sm" title="HackTheBox">
+                <span class="text-sm font-sm" title="">
                   HackTheBox
                 </span>
               </a>
@@ -547,7 +536,7 @@
         
         class="flex items-center gap-4 group bf-icon-color-hover text-neutral-700 dark:text-neutral-200">
         
-        <span title="Mes" class="text-2xl font-bold tracking-tight">
+        <span title="Me" class="text-2xl font-bold tracking-tight">
           Me
         </span>
         
@@ -587,17 +576,6 @@
                   
                   <span title="Certifications" class="text-lg">
                     Certifications
-                  </span>
-                </a>
-              
-                <a
-                  href="/me/experience/"
-                  aria-label="Profesional Experience"
-                  
-                  class="flex items-center gap-3 p-2 group bf-icon-color-hover text-neutral-700 dark:text-neutral-200">
-                  
-                  <span title="Profesional Experience" class="text-lg">
-                    Profesional Experience
                   </span>
                 </a>
               
@@ -648,12 +626,12 @@
             <div class="ms-7 mt-4">
               
                 <a
-                  href="/writeup/hackthebox/"
+                  href=""
                   aria-label="HackTheBox"
                   
                   class="flex items-center gap-3 p-2 group bf-icon-color-hover text-neutral-700 dark:text-neutral-200">
                   
-                  <span title="HackTheBox" class="text-lg">
+                  <span title="" class="text-lg">
                     HackTheBox
                   </span>
                 </a>
@@ -882,6 +860,51 @@
       
       
       
+        <div class="order-first lg:ms-auto px-0 lg:order-last lg:ps-8 lg:max-w-2xs">
+          <div class="toc ps-5 print:hidden lg:sticky lg:top-[140px]">
+            <details
+  open
+  id="TOCView"
+  class="toc-right mt-0 overflow-y-auto overscroll-contain bf-scrollbar rounded-lg -ms-5 ps-5 pe-2 hidden lg:block">
+  <summary
+    class="block py-1 text-lg font-semibold cursor-pointer bg-neutral-100 text-neutral-800 -ms-5 ps-5 dark:bg-neutral-700 dark:text-neutral-100 lg:hidden">
+    Table of Contents
+  </summary>
+  <div
+    class="min-w-[220px] py-2 border-dotted border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#nmap">Nmap</a></li>
+    <li><a href="#foothold">Foothold</a></li>
+    <li><a href="#privilege-escalation-failed-attempt">Privilege escalation (failed attempt)</a></li>
+    <li><a href="#privilege-escalation-successful-attempt">Privilege Escalation (successful attempt)</a></li>
+  </ul>
+</nav>
+  </div>
+</details>
+<details class="toc-inside mt-0 overflow-hidden rounded-lg -ms-5 ps-5 lg:hidden">
+  <summary
+    class="py-1 text-lg font-semibold cursor-pointer bg-neutral-100 text-neutral-800 -ms-5 ps-5 dark:bg-neutral-700 dark:text-neutral-100 lg:hidden">
+    Table of Contents
+  </summary>
+  <div
+    class="py-2 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#nmap">Nmap</a></li>
+    <li><a href="#foothold">Foothold</a></li>
+    <li><a href="#privilege-escalation-failed-attempt">Privilege escalation (failed attempt)</a></li>
+    <li><a href="#privilege-escalation-successful-attempt">Privilege Escalation (successful attempt)</a></li>
+  </ul>
+</nav>
+  </div>
+</details>
+
+
+
+          </div>
+        </div>
+      
 
 
       <div class="min-w-0 min-h-0 max-w-fit">
@@ -901,7 +924,7 @@
     sizes="(min-width: 768px) 50vw, 65vw"
     data-zoom-src="/writeup/vulnlab/baby/featured.png"></figure>
 
-<h1 class="relative group">Nmap
+<h2 class="relative group">Nmap
     <div id="nmap" class="anchor"></div>
     
     <span
@@ -909,7 +932,7 @@
         <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#nmap" aria-label="Anchor">#</a>
     </span>
     
-</h1>
+</h2>
 <p>First, as always, the challenge was started by running Nmap to enumerate the server&rsquo;s ports and services.</p>
 <div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">$ sudo nmap -p- -sCV 10.10.102.159 -oA nmap/init-tcp
 </span></span><span class="line"><span class="cl">
@@ -976,7 +999,7 @@
 </ul>
 <br>
 
-<h1 class="relative group">Foothold
+<h2 class="relative group">Foothold
     <div id="foothold" class="anchor"></div>
     
     <span
@@ -984,7 +1007,7 @@
         <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#foothold" aria-label="Anchor">#</a>
     </span>
     
-</h1>
+</h2>
 <p>It was then identified that LDAP enumeration using a null session was possible, and a password was discovered in the description field of the user &ldquo;Teresa Bell&rdquo;.</p>
 <div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">ldapsearch -x -H ldap://10.10.102.159 -b &#34;CN=Teresa Bell,OU=it,DC=baby,DC=vl&#34; -s base</span></span></code></pre></div></div>
 <figure><img
@@ -1096,7 +1119,7 @@
 
 <br></p>
 
-<h1 class="relative group">Privilege escalation (failed attempt)
+<h2 class="relative group">Privilege escalation (failed attempt)
     <div id="privilege-escalation-failed-attempt" class="anchor"></div>
     
     <span
@@ -1104,7 +1127,7 @@
         <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#privilege-escalation-failed-attempt" aria-label="Anchor">#</a>
     </span>
     
-</h1>
+</h2>
 <p>First, the current user&rsquo;s privileges were enumerated, revealing a clear privilege escalation path.
 <figure><img
     class="my-0 rounded-md"
@@ -1179,7 +1202,7 @@
 </p>
 <br>
 
-<h1 class="relative group">Privilege Escalation (successful attempt)
+<h2 class="relative group">Privilege Escalation (successful attempt)
     <div id="privilege-escalation-successful-attempt" class="anchor"></div>
     
     <span
@@ -1187,7 +1210,7 @@
         <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#privilege-escalation-successful-attempt" aria-label="Anchor">#</a>
     </span>
     
-</h1>
+</h2>
 <p>First, as stated in the aforementioned blog post, a DiskShadow script was written to create a live copy of the C: drive and expose it as a network drive using the letter E:.
 <figure><img
     class="my-0 rounded-md"
@@ -1463,7 +1486,7 @@
             </a>
             
               <span class="me-6 mt-1 text-xs text-neutral-500 dark:text-neutral-400">
-                <time datetime="2026-02-09T00:00:00&#43;00:00">9 February 2026</time>
+                <time datetime="2026-02-10T00:00:00&#43;00:00">10 February 2026</time>
               </span>
             
           

@@ -11,12 +11,12 @@
     
     <item>
       <title>Baby</title>
-      <link>http://localhost:1313/writeup/vulnlab/baby/</link>
+      <link>http://localhost:1313/writeup/machines/vulnlab/baby/</link>
       <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/writeup/vulnlab/baby/</guid>
+      <guid>http://localhost:1313/writeup/machines/vulnlab/baby/</guid>
       <description></description>
-      <media:content xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:1313/writeup/vulnlab/baby/featured.png" />
+      <media:content xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:1313/writeup/machines/vulnlab/baby/featured.png" />
     </item>
     
   </channel>

@@ -19,19 +19,17 @@ weight = 20
 name = "WriteUp"
 weight = 30
 
-#### HACKTHEBOX ####
 [[main]]
-name = "HackTheBox"
+name = "Machines"
 parent = "WriteUp"
-pageRef = "WriteUp/HackTheBox"
+pageRef = "WriteUp/Machines/"
 weight = 30
 
-#### VULNLAB ####
-[[main]]
-name = "VulnLab"
-parent = "WriteUp"
-pageRef = "WriteUp/VulnLab"
-weight = 30
+#[[main]]
+#name = "Red Team Labs"
+#parent = "WriteUp"
+#pageRef = "WriteUp/RedTeamLabs/"
+#weight = 30
 
 #### FOOTER ####
 [[footer]]

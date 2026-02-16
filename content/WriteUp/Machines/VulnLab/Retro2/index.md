@@ -1,7 +1,7 @@
 ---
 title: Retro2
 date: 2026-02-15T00:00:00
-draft: true
+draft: false
 sources: "VulnLab"
 difficulties: Easy
 tags: ["Windows", "Active Directory", "SMB Enumeration", "Guest Access", "BloodHound", "Computer Accounts", "RpcEptMapper"]

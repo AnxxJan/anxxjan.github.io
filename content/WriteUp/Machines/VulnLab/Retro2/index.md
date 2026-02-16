@@ -1,6 +1,6 @@
 ---
 title: Retro2
-date: 2026-02-15T00:00:00
+date: 2026-02-16T00:00:00
 draft: false
 sources: "VulnLab"
 difficulties: Easy
@@ -124,7 +124,7 @@ The VBA code contained hardcoded domain credentials:
 
 ![](Pasted%20image%2020260215155038.png)
 
-## LDAP and BloodHound Enumeration
+### LDAP and BloodHound Enumeration
 
 We validated the credentials:
 

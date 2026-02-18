@@ -11,6 +11,7 @@ author: "Anx"
   <img src="WiFiChallenge-CWP.png" class="grid-w33" />
   <img src="HTBCJCA.png" class="grid-w33" />
   <img src="HTB-Dante.png" class="grid-w33" />
+  <img src="HTB-POO.png" class="grid-w33" />
   <img src="TCM-PEH.png" class="grid-w33" />
   <img src="TCM-WindowsPrivEsc.png" class="grid-w33" />
   <img src="THM-Offensive_Pentesting.png" class="grid-w33" />

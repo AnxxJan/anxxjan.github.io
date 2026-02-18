@@ -12,7 +12,7 @@ description: A Windows-based challenge where an exposed Gitea access token leads
 ![alt text](featured.png)
 
 ## Nmap
-First, as always, the challenge was started by running Nmap to enumerate the server's ports and services.
+First, as always, the challenge started by running Nmap to enumerate the server's ports and services.
 
 ```
 $ sudo nmap -p- -sCV 10.10.66.156 -oA nmap/fulltcp-Lock

@@ -4,12 +4,7 @@ date: 2026-02-23T00:00:00
 draft: false
 sources: HackTheBox
 difficulties: Easy
-tags:
-  - Linux
-  - CVE-2023-30253
-  - CVE-2022-37706
-  - Dolibarr
-  - Subdomain Enumeration
+tags: ["Linux","CVE-2023-30253","CVE-2022-37706","Dolibarr","Subdomain Enumeration"]
 author: Anx
 description: "BoardLight is an easy difficulty Linux machine that features a Dolibarr instance vulnerable to CVE-2023-30253. This vulnerability is leveraged to gain access as www-data. After enumerating and dumping the web configuration file contents, plaintext credentials lead to SSH access to the machine. Enumerating the system, a SUID binary related to enlightenment is identified which is vulnerable to privilege escalation via CVE-2022-37706 and can be abused to leverage a root shell."
 ---

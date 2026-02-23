@@ -69,7 +69,7 @@ sudo nano /etc/hosts
 ```
 
 ![](Pasted%20image%2020260223215747.png)
----
+
 ### CRM Application Access
 
 Navigating to `crm.board.htb` exposed a CRM platform identified as **Dolibarr ERP CRM**.
